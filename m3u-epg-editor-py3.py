@@ -46,6 +46,7 @@ class M3uItem:
         self.tvg_name = None
         self.tvg_id = None
         self.tvg_logo = None
+        self.tvg_chno = None
         self.group_title = None
         self.timeshift = None
         self.catchup_days = None
@@ -67,6 +68,9 @@ class M3uItem:
                 match = re.search('tvg-logo="(.*?)"', m3u_fields, re.IGNORECASE)
                 if match:
                     self.tvg_logo = match.group(1)
+                match = re.search('tvg-chno="(.*?)"', m3u_fields, re.IGNORECASE)
+                if match:
+                    self.tvg_chno = match.group(1)
                 match = re.search('group-title="(.*?)"', m3u_fields, re.IGNORECASE)
                 if match:
                     self.group_title = match.group(1)
@@ -695,6 +699,9 @@ def save_new_m3u(args, m3u_entries):
                     if entry.tvg_id is not None and entry.tvg_id != "":
                         channel_id = entry.tvg_id.lower() if not args.preserve_case else entry.tvg_id
                         meta += ' tvg-id="%s"' % channel_id
+
+                    if entry.tvg_chno is not None and entry.tvg_chno != "":
+                        meta += ' tvg-chno="%s"' % entry.tvg_chno
 
                     meta += ' tvg-name="%s"' % entry.tvg_name
 
